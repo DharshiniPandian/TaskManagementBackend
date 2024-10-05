@@ -74,14 +74,14 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [[true, false]],
       }
     },
-    createdBy:{
+    created_by:{
       type: DataTypes.INTEGER,
       allowNull: false,
       validate: {
         isInt: true,
       }
     },
-    updatedBy:{
+    updated_by:{
       type: DataTypes.INTEGER,
       allowNull: true,
       validate: {

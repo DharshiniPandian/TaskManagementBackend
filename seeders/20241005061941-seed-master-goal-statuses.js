@@ -3,59 +3,58 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('master_user_roles', [
+    await queryInterface.bulkInsert('master_goal_statuses', [
       {
-        name: 'UI/UX',
+        name: 'Not Started',
         is_active: true,
         created_by: 1, 
-        updated_by: 1,  
+        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null
       },
       {
-        name: 'DevOps',
+        name: 'In Progress',
         is_active: true,
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null
       },
       {
-        name: 'Frontend Developer',
+        name: 'Completed',
         is_active: true,
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null
       },
       {
-        name: 'Backend Developer',
+        name: 'On Hold',
         is_active: true,
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null
       },
       {
-        name: 'Fullstack Developer',
+        name: 'Cancelled',
         is_active: true,
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
-      },
-      {
-        name: 'Designer',
-        is_active: true,
-        created_by: 1,
-        updated_by: 1,
-        created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null
       }
     ], {});
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('master_user_roles', null, {});
+  
+    await queryInterface.bulkDelete('master_goal_statuses', null, {});
+
   }
 };

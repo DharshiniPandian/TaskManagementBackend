@@ -7,40 +7,40 @@ module.exports = {
       {
         name: 'Software Development',
         is_active: true,
-        createdBy: 1,   
-        updatedBy: 1,   
+        created_by: 1,   
+        updated_by: 1,   
         created_at: new Date(),
         updated_at: new Date()
       },
       {
         name: 'Marketing',
         is_active: true,
-        createdBy: 1,
-        updatedBy: 1,
+        created_by: 1,
+        updated_by: 1,
         created_at: new Date(),
         updated_at: new Date()
       },
       {
         name: 'Support',
         is_active: true,
-        createdBy: 1,
-        updatedBy: 1,
+        created_by: 1,
+        updated_by: 1,
         created_at: new Date(),
         updated_at: new Date()
       },
       {
         name: 'Sales',
         is_active: true,
-        createdBy: 1,
-        updatedBy: 1,
+        created_by: 1,
+        updated_by: 1,
         created_at: new Date(),
         updated_at: new Date()
       },
       {
         name: 'Others',
         is_active: true,
-        createdBy: 1,
-        updatedBy: 1,
+        created_by: 1,
+        updated_by: 1,
         created_at: new Date(),
         updated_at: new Date()
       }
