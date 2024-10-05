@@ -3,17 +3,17 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.bulkInsert('master_user_roles', [
+    await queryInterface.bulkInsert('master_user_statuses', [
       {
-        name: 'UI/UX',
+        name: 'Active',
         is_active: true,
         created_by: 1, 
-        updated_by: 1,  
+        updated_by: 1, 
         created_at: new Date(),
         updated_at: new Date()
       },
       {
-        name: 'DevOps',
+        name: 'Inactive',
         is_active: true,
         created_by: 1,
         updated_by: 1,
@@ -21,7 +21,7 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        name: 'Frontend Developer',
+        name: 'Suspended',
         is_active: true,
         created_by: 1,
         updated_by: 1,
@@ -29,7 +29,7 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        name: 'Backend Developer',
+        name: 'Pending',
         is_active: true,
         created_by: 1,
         updated_by: 1,
@@ -37,7 +37,7 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        name: 'Fullstack Developer',
+        name: 'Deleted',
         is_active: true,
         created_by: 1,
         updated_by: 1,
@@ -45,17 +45,25 @@ module.exports = {
         updated_at: new Date()
       },
       {
-        name: 'Designer',
+        name: 'Deactivated',
+        is_active: true,
+        created_by: 1,
+        updated_by: 1,
+        created_at: new Date(),
+        updated_at: new Date()
+      },
+      {
+        name: 'Banned',
         is_active: true,
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
         updated_at: new Date()
       }
-    ], {});
+    ], {}); 
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.bulkDelete('master_user_roles', null, {});
+    await queryInterface.bulkDelete('master_user_statuses', null, {});
   }
 };

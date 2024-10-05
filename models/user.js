@@ -38,6 +38,7 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
+
     }
   }
   User.init({

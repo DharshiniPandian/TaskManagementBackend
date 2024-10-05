@@ -35,11 +35,11 @@ module.exports = {
         defaultValue: true,
         allowNull: false
       },
-      createdBy: {
+      created_by: {
         type: Sequelize.INTEGER,
         allowNull: false
       },
-      updatedBy: {
+      updated_by: {
         type: Sequelize.INTEGER,
         allowNull: true
       },
