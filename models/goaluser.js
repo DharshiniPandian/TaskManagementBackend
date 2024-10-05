@@ -90,7 +90,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'GoalUser',
-    tableName: 'gosl_users',
+    tableName: 'goal_users',
     timestamps: true,
     paranoid: true,
     createdAt: 'created_at', 

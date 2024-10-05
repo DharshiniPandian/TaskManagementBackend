@@ -11,6 +11,8 @@ const get_master_domains = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
     get_master_domains
 }

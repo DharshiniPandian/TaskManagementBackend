@@ -66,7 +66,7 @@ module.exports = {
         onDelete: 'CASCADE'
       },
       is_active: {
-        type: Sequelize.BOOLEAN,sa
+        type: Sequelize.BOOLEAN,
       },
       updated_by: {
         type: Sequelize.INTEGER,

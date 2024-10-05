@@ -21,7 +21,7 @@ app.use(cors({
 }))
 
 app.use('/master', masterRoutes)
-app.use('/goal', goalRoutes)
+// app.use('/goal', goalRoutes)
 
 app.get('/', (req, res) => {
     res.send('request received')
