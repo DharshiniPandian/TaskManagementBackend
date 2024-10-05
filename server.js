@@ -2,6 +2,8 @@ const express = require('express')
 const dotenv = require('dotenv')
 const sequelize = require('./config/db')
 const cors = require('cors')
+const masterRoutes = require('./src/routes/masterRoutes')
+const goalRoutes = require('./src/routes/goalRoutes')
 
 dotenv.config()
 
@@ -17,6 +19,9 @@ app.use(cors({
     methods: ["POST", "GET", "PUT", "OPTIONS"],
     credentials: true
 }))
+
+app.use('/master', masterRoutes)
+app.use('/goal', goalRoutes)
 
 app.get('/', (req, res) => {
     res.send('request received')
