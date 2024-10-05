@@ -5,7 +5,7 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.addColumn('users', 'role_id', {
       type: Sequelize.INTEGER,
-      allowNull: false,  
+      allowNull: true,  
       references: {
         model: 'master_user_roles',  
         key: 'id',
@@ -16,7 +16,7 @@ module.exports = {
 
     await queryInterface.addColumn('users', 'status_id', {
       type: Sequelize.INTEGER,
-      allowNull: false,  
+      allowNull: true,  
       references: {
         model: 'master_user_statuses',  
         key: 'id',

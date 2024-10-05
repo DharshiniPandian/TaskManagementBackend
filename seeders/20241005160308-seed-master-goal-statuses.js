@@ -38,8 +38,6 @@ module.exports = {
   },
 
   async down (queryInterface, Sequelize) {
-  
     await queryInterface.bulkDelete('master_goal_statuses', null, {});
-
   }
 };
