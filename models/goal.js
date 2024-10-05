@@ -33,15 +33,28 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Goal.belongsTo(models.MasterGoalStatus, {
-        foreignKey: 'status',
+        foreignKey: 'status_id',
         as: 'goalstatus',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
 
+      Goal.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      Goal.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      }); 
+
       Goal.hasMany(models.GoalUser, {
         foreignKey: 'goal_id',
-        as: 'goal',
+        as: 'goalusers',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
@@ -70,6 +83,24 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE'
     },
+    goal_created_by: {
+      type: DataTypes.INTEGER,
+        allowNull: false,
+      references: {
+        model: 'users', 
+        key: 'id',
+      },
+    }, 
+    hashtag_id:  {
+      type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'master_hashtags', 
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+    }, 
     goal_title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -84,14 +115,6 @@ module.exports = (sequelize, DataTypes) => {
         notEmpty: true,
       }
     },
-    hashtag_id:  {
-      type: DataTypes.INTEGER,
-        allowNull: false,
-      references: {
-        model: 'master_hashtags', 
-        key: 'id',
-      },
-    }, 
     start_at: {
       type: DataTypes.DATE,
       allowNull: false,
@@ -116,14 +139,6 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    goal_created_by: {
-      type: DataTypes.INTEGER,
-        allowNull: false,
-      references: {
-        model: 'users', 
-        key: 'id',
-      },
-    }, 
     status_id: {
       type: DataTypes.INTEGER,
         allowNull: false,
@@ -139,21 +154,27 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [[true, false]],
       }
     },
-    created_by: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-      }
-    },
     updated_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
-
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
   }, {
     sequelize,
     modelName: 'Goal',
@@ -162,7 +183,7 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true,
     createdAt: 'created_at', 
     updatedAt: 'updated_at', 
-    deletedAt: 'deleted_at',
+    deletedAt: 'deleted_at', 
   });
   return Goal;
 };

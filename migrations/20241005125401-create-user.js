@@ -2,14 +2,18 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('master_domains', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      name:{
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      path: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -18,23 +22,14 @@ module.exports = {
         defaultValue: true,
         allowNull: false
       },
-      created_by: {
-        type: Sequelize.INTEGER,
-        allowNull: false
-      },
-      updated_by: {
-        type: Sequelize.INTEGER,
-        allowNull: true
-      },
       created_at: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') 
       },
       updated_at: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       deleted_at: {
         type: Sequelize.DATE,
@@ -43,6 +38,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('master_domains');
+    await queryInterface.dropTable('users');
   }
 };

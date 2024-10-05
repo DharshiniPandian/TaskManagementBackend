@@ -7,50 +7,38 @@ module.exports = {
       {
         name: 'UI/UX',
         is_active: true,
-        created_by: 1, 
-        updated_by: 1,  
+        created_by: 1,  
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'DevOps',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Frontend Developer',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Backend Developer',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Fullstack Developer',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Designer',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       }
     ], {});
   },

@@ -11,9 +11,28 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      MasterUserStatus.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterUserStatus.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterUserStatus.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      }); 
+
       MasterUserStatus.hasMany(models.User, {
         foreignKey: 'status_id',
-        as: 'status',
+        as: 'statusid',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       }); 
@@ -40,19 +59,37 @@ module.exports = (sequelize, DataTypes) => {
        }
      },
      created_by: {
-       type: DataTypes.INTEGER,
-       allowNull: false,
-       validate: {
-         isInt: true,
-       }
-     },
-     updated_by: {
-       type: DataTypes.INTEGER,
-       allowNull: true,
-       validate: {
-         isInt: true,
-       }
-     },
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    updated_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
   }, {
     sequelize,
     modelName: 'MasterUserStatus',

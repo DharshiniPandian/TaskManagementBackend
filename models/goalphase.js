@@ -13,34 +13,53 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       GoalPhase.belongsTo(models.Goal, {
         foreignKey: 'goal_id',
-        as: 'goalphases',
+        as: 'goal',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
 
+      GoalPhase.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      GoalPhase.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      GoalPhase.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
       GoalPhase.hasMany(models.PhaseUser, {
         foreignKey: 'phase_id',
         as: 'phase',
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE', 
+        onDelete: 'CASCADE',
       });
     }
   }
   GoalPhase.init({
-    id:{
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4, 
-      primaryKey: true,
+    id: {
+      type: Sequelize.UUID,
+      defaultValue: Sequelize.UUIDV4,
       allowNull: false,
+      primaryKey: true
     },
-    goal_id:  {
-      type: DataTypes.UUID,
-        references: {
-          model: 'goals', 
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
+    goal_id: {
+      type: Sequelize.UUID,
+      allowNull: false,
+      references: {
+        model: 'goals', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
     phase_title: {
       type: DataTypes.STRING,
@@ -73,26 +92,44 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    is_active:{
+    is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       validate: {
         isIn: [[true, false]],
       }
     },
-    created_by:{
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      validate: {
-        isInt: true,
-      }
-    },
-    updated_by:{
+    created_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    updated_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
   }, {
     sequelize,
@@ -102,7 +139,7 @@ module.exports = (sequelize, DataTypes) => {
     paranoid: true,
     createdAt: 'created_at', 
     updatedAt: 'updated_at', 
-    deletedAt: 'deleted_at',
+    deletedAt: 'deleted_at', 
   });
   return GoalPhase;
 };

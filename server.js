@@ -3,7 +3,7 @@ const dotenv = require('dotenv')
 const sequelize = require('./config/db')
 const cors = require('cors')
 const masterRoutes = require('./src/routes/masterRoutes')
-const goalRoutes = require('./src/controllers/goal_controller')
+const goalRoutes = require('./src/routes/goalRoutes')
 
 dotenv.config()
 

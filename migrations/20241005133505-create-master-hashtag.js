@@ -2,32 +2,15 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('goal_phases', {
+    await queryInterface.createTable('master_hashtags', {
       id: {
-        type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4, 
-        primaryKey: true,
         allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: Sequelize.INTEGER
       },
-      goal_id: {
-        type: Sequelize.UUID,
-          references: {
-            model: 'goals', 
-            key: 'id'
-          },
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE'
-      },
-      phase_title: {
+      name: {
         type: Sequelize.STRING,
-        allowNull: false
-      },
-      start_at: {
-        type: Sequelize.DATE,
-        allowNull: false
-      },
-      end_at: {
-        type: Sequelize.DATE,
         allowNull: false
       },
       is_active: {
@@ -37,11 +20,33 @@ module.exports = {
       },
       created_by: {
         type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        references: {
+          model: 'users', 
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       updated_by: {
         type: Sequelize.INTEGER,
-        allowNull: true
+        allowNull: true,
+        references: {
+          model: 'users', 
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
+      },
+      deleted_by: {
+        type: Sequelize.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'users', 
+          key: 'id'
+        },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       created_at: {
         allowNull: false,
@@ -49,17 +54,17 @@ module.exports = {
         defaultValue: Sequelize.literal('CURRENT_TIMESTAMP') 
       },
       updated_at: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
       }
+      
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('goal_phases');
+    await queryInterface.dropTable('master_hashtags');
   }
 };

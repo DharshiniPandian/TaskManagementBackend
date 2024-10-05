@@ -11,9 +11,27 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      MasterUserRole.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterUserRole.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterUserRole.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      }); 
       MasterUserRole.hasMany(models.User, {
         foreignKey: 'role_id',
-        as: 'role',
+        as: 'roleid',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       }); 
@@ -21,41 +39,60 @@ module.exports = (sequelize, DataTypes) => {
   }
   MasterUserRole.init({
     id: {
-     type: DataTypes.INTEGER,
-     autoIncrement: true,
-     primaryKey: true,
-    },
-    name: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        notEmpty: true,
-      }
-    },
-    is_active: {
-      type: DataTypes.BOOLEAN,
-      defaultValue: true,
-      validate: {
-        isIn: [[true, false]],
-      }
-    },
-    created_by: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+     },
+     name: {
+       type: DataTypes.STRING,
+       allowNull: false,
+       validate: {
+         notEmpty: true,
+       }
+     },
+     is_active: {
+       type: DataTypes.BOOLEAN,
+       defaultValue: true,
+       validate: {
+         isIn: [[true, false]],
+       }
+     },
+     created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
     updated_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    
   }, {
     sequelize,
-    modelName: 'MasterUserRole',
+    modelName: 'MasterUserRoles',
     tableName: 'master_user_roles',
     timestamps: true,
     paranoid: true,

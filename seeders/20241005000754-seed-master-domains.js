@@ -10,7 +10,6 @@ module.exports = {
         created_by: 1,   
         updated_by: 1,   
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Marketing',
@@ -18,7 +17,6 @@ module.exports = {
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Support',
@@ -26,7 +24,6 @@ module.exports = {
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Sales',
@@ -34,7 +31,6 @@ module.exports = {
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Others',
@@ -42,7 +38,6 @@ module.exports = {
         created_by: 1,
         updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       }
     ], {});
   },

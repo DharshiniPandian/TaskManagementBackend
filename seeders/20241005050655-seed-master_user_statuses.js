@@ -8,57 +8,43 @@ module.exports = {
         name: 'Active',
         is_active: true,
         created_by: 1, 
-        updated_by: 1, 
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Inactive',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Suspended',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Pending',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Deleted',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Deactivated',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: 'Banned',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       }
     ], {}); 
   },

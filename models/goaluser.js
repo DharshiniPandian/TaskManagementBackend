@@ -24,6 +24,25 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
+
+      GoalUser.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      GoalUser.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      GoalUser.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   GoalUser.init({
@@ -35,13 +54,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     goal_id: {
       type: DataTypes.UUID,
-        references: {
-          model: 'goals', 
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    },
+        allowNull: false,
+      references: {
+        model: 'goals', 
+        key: 'id',
+      },
+    }, 
     user_id: {
       type: DataTypes.INTEGER,
         allowNull: false,
@@ -49,8 +67,6 @@ module.exports = (sequelize, DataTypes) => {
         model: 'users', 
         key: 'id',
       },
-      onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
     }, 
     is_owner:{
       type: DataTypes.BOOLEAN,
@@ -66,31 +82,49 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [[true, false]],
       }
     },
-    is_active:{
+    is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       validate: {
         isIn: [[true, false]],
       }
     },
-    created_by:{
+    created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
-    updated_by:{
+    updated_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
   }, {
     sequelize,
     modelName: 'GoalUser',
-    tableName: 'gosl_users',
+    tableName: 'goal_users',
     timestamps: true,
     paranoid: true,
     createdAt: 'created_at', 

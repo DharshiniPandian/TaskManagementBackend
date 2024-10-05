@@ -7,82 +7,62 @@ module.exports = {
       {
         name: '#Technology',
         is_active: true,
-        created_by: 1,  
-        updated_by: 1, 
+        created_by: 1,   
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#Programming',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#SoftwareDevelopment',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#WebDevelopment',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#DataScience',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#AI',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#MachineLearning',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#DevOps',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#CyberSecurity',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
       {
         name: '#CloudComputing',
         is_active: true,
         created_by: 1,
-        updated_by: 1,
         created_at: new Date(),
-        updated_at: new Date()
       },
     ], {});
   },

@@ -11,12 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      MasterDomain.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterDomain.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterDomain.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      
       MasterDomain.hasMany(models.Goal, {
         foreignKey: 'domain_id',
         as: 'domain',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-      });  
+      });
     }
   }
   MasterDomain.init({
@@ -42,17 +61,36 @@ module.exports = (sequelize, DataTypes) => {
      created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
     updated_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
+    
   }, {
     sequelize,
     modelName: 'MasterDomain',

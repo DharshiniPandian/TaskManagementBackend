@@ -11,12 +11,31 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      MasterGoalStatus.hasMany(models.Goal, {
-        foreignKey: 'status',
-        as: 'goalstatus',
+      MasterGoalStatus.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-      });  
+      });
+      MasterGoalStatus.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      MasterGoalStatus.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      }); 
+
+      MasterGoalStatus.hasMany(models.Goal, {
+        foreignKey: 'status_id',
+        as: 'status',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      }); 
     }
   }
   MasterGoalStatus.init({
@@ -40,19 +59,37 @@ module.exports = (sequelize, DataTypes) => {
        }
      },
      created_by: {
-       type: DataTypes.INTEGER,
-       allowNull: false,
-       validate: {
-         isInt: true,
-       }
-     },
-     updated_by: {
-       type: DataTypes.INTEGER,
-       allowNull: true,
-       validate: {
-         isInt: true,
-       }
-     },
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    updated_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+    },
   }, {
     sequelize,
     modelName: 'MasterGoalStatus',

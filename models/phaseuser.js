@@ -11,9 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      PhaseUser.belongsTo(models.GoalPhase, {
-        foreignKey: 'phase',
-        as: 'goalphase',
+      PhaseUser.belongsTo(models.Goal, {
+        foreignKey: 'phase_id',
+        as: 'phase',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
@@ -23,6 +23,25 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
+      });
+
+      PhaseUser.belongsTo(models.User, {
+        foreignKey: 'created_by',
+        as: 'createdby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      PhaseUser.belongsTo(models.User, {
+        foreignKey: 'updated_by',
+        as: 'updatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+      PhaseUser.belongsTo(models.User, {
+        foreignKey: 'deleted_by',
+        as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       });
     }
   }
@@ -35,14 +54,12 @@ module.exports = (sequelize, DataTypes) => {
     },
     phase_id: {
       type: DataTypes.UUID,
-      allowNull: false,
-        references: {
-          model: 'goal_phases', 
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    },
+        allowNull: false,
+      references: {
+        model: 'goal_phases', 
+        key: 'id',
+      },
+    }, 
     user_id: {
       type: DataTypes.INTEGER,
         allowNull: false,
@@ -50,8 +67,6 @@ module.exports = (sequelize, DataTypes) => {
         model: 'users', 
         key: 'id',
       },
-      onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
     }, 
     is_owner:{
       type: DataTypes.BOOLEAN,
@@ -67,26 +82,44 @@ module.exports = (sequelize, DataTypes) => {
         isIn: [[true, false]],
       }
     },
-    is_active:{
+    is_active: {
       type: DataTypes.BOOLEAN,
       defaultValue: true,
       validate: {
         isIn: [[true, false]],
       }
     },
-    created_by:{
+    created_by: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
     },
-    updated_by:{
+    updated_by: {
       type: DataTypes.INTEGER,
       allowNull: true,
-      validate: {
-        isInt: true,
-      }
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
+      
+    },
+    deleted_by: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'users', 
+        key: 'id'
+      },
+      onUpdate: 'CASCADE',
+      onDelete: 'CASCADE'
     },
   }, {
     sequelize,
