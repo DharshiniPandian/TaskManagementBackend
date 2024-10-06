@@ -255,7 +255,7 @@ router.get('/', getgoalcontroller.getAllGoals)
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/GoalById'
- *          404:
+ *          400:
  *              description: Goal not found
  *              content:
  *                  application/json:
@@ -315,7 +315,7 @@ router.get('/:id', getgoalcontroller.getGoalById)
  *                  application/json:
  *                      schema:
  *                          $ref: '#/components/schemas/DeleteGoal'
- *          404:
+ *          400:
  *              description: Goal not found
  *              content:
  *                  application/json:
@@ -487,7 +487,7 @@ router.put('/deletegoal/:id', deletecontroller.deleteGoal)
  *                     items:
  *                       $ref: '#/components/schemas/GoalPhase'
  *     responses:
- *       200:
+ *       201:
  *         description: Goal created successfully
  *         content:
  *           application/json:
@@ -539,7 +539,7 @@ router.post('/create', goalcreatecontroller.create_goal)
  *                 message:
  *                   type: string
  *                   example: "Goal phase with ID 1 was successfully soft deleted."
- *       404:
+ *       400:
  *         description: Goal phase not found
  *         content:
  *           application/json:
@@ -598,7 +598,7 @@ router.put('/deletephase/:id', deletecontroller.deleteGoalPhase)
  *                 message:
  *                   type: string
  *                   example: "User with ID 2 was successfully soft deleted from phase 1."
- *       404:
+ *       400:
  *         description: User or goal phase not found
  *         content:
  *           application/json:
@@ -657,7 +657,7 @@ router.put('/deletephaseuser/:phase_id/:user_id', deletecontroller.deleteGoalPha
  *                 message:
  *                   type: string
  *                   example: "User with ID 2 was successfully soft deleted from goal 1."
- *       404:
+ *       400:
  *         description: User or goal not found
  *         content:
  *           application/json:

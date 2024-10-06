@@ -66,7 +66,7 @@ const create_goal = async (req, res) => {
     }
 
     await t.commit();
-    res.status(200).json({ message: 'Goal created successfully' });
+    res.status(201).json({ message: 'Goal created successfully' });
   } catch (error) {
     await t.rollback();
     console.error('Error storing data during goal transaction: ', error);
