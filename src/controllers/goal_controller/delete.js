@@ -4,20 +4,18 @@ const deleteGoal = async (req, res) => {
   const { id } = req.params; 
 
   try {
-    // Soft delete the main "Goal" post by setting "deleted_at"
+    // soft delete the main Goal post by setting deleted_at
     const result = await Goal.update(
       { deleted_at: new Date() }, 
       { where: { id } } 
     );
 
-    // Check if the goal was found and updated
     if (result[0] === 0) {
-      return res.status(404).json({
+      return res.status(400).json({
         message: `Goal with ID ${id} not found.`,
       });
     }
 
-    // If successful, return a response
     return res.status(200).json({
       message: `Goal with ID ${id} was successfully soft deleted.`,
     });
@@ -34,20 +32,19 @@ const deleteGoalPhase = async (req, res) => {
     const { id } = req.params;
   
     try {
-      // Soft delete the goal phase by setting "deleted_at"
+      // soft delete the goal phase by setting deleted_at
       const result = await GoalPhase.update(
         { deleted_at: new Date() },
         { where: { id } } 
       );
-  
-      // Check if the goal phase was found and updated
+      
+      // update method returns an array, where the first element (result[0]) is the number of rows affected (i.e., updated) by the operation
       if (result[0] === 0) {
-        return res.status(404).json({
+        return res.status(400).json({
           message: `Goal phase with ID ${id} not found.`,
         });
       }
   
-      // If successful, return a response
       return res.status(200).json({
         message: `Goal phase with ID ${id} was successfully soft deleted.`,
       });
@@ -61,18 +58,17 @@ const deleteGoalPhase = async (req, res) => {
   };
 
   const deleteGoalPhaseUser = async (req, res) => {
-    const { phase_id, user_id } = req.params; // Extracting phase_id and user_id from request parameters
+    const { phase_id, user_id } = req.params; 
   
     try {
-      // Soft delete the phase user by setting "deleted_at"
+      // soft delete the phase user by setting "deleted_at"
       const result = await PhaseUser.update(
         { deleted_at: new Date() }, 
         { where: { phase_id, user_id } } 
       );
   
-      // Check if the phase user was found and updated
       if (result[0] === 0) {
-        return res.status(404).json({
+        return res.status(400).json({
           message: `User with ID ${user_id} in phase ${phase_id} not found.`,
         });
       }
@@ -90,13 +86,13 @@ const deleteGoalPhase = async (req, res) => {
   };
 
   const deleteGoalUser = async (req, res) => {
-    const { goal_id, user_id } = req.params; // Extract goal_id and user_id from request parameters
+    const { goal_id, user_id } = req.params; 
 
     try {
-        // Step 1: Get all phases associated with the given goal_id
+        // getting all phases associated with the given goal_id
         const phases = await GoalPhase.findAll({
             where: { goal_id },
-            attributes: ['id'] // We only need the phase ids
+            attributes: ['id']
         });
 
         // If there are no phases under this goal, proceed to delete the user from the goal
@@ -106,14 +102,14 @@ const deleteGoalPhase = async (req, res) => {
             });
         }
 
-        // Step 2: Extract phase ids and check if the user is associated with any of these phases
+        // extract all phase ids 
         const phaseIds = phases.map(phase => phase.id);
 
-        // Step 3: Check if the user is associated with any phases under this goal
+        // check if the user is associated with any phases under this goal
         const phaseUserAssociations = await PhaseUser.findAll({
             where: {
                 user_id,
-                phase_id: phaseIds // Check for the user in the phases of the goal
+                phase_id: phaseIds //here sequelize will interpret it as an IN clause
             }
         });
 
@@ -123,20 +119,18 @@ const deleteGoalPhase = async (req, res) => {
             });
         }
 
-        // Step 4: Proceed with soft deleting the user from the goal if no associations are found
+        // proceed with soft deleting the user from the goal if no associations are found
         const result = await GoalUser.update(
-            { deleted_at: new Date() }, // Soft delete by setting "deleted_at"
-            { where: { user_id, goal_id } } // Ensure deletion is scoped to the goal
+            { deleted_at: new Date() },
+            { where: { user_id, goal_id } } 
         );
 
-        // Check if the user was successfully soft deleted
         if (result[0] === 0) {
             return res.status(404).json({
                 message: `User with ID ${user_id} not found in goal ${goal_id}.`,
             });
         }
 
-        // Success response
         return res.status(200).json({
             message: `User with ID ${user_id} was successfully soft deleted from goal ${goal_id}.`,
         });

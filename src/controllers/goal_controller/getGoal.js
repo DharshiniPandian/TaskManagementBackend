@@ -10,6 +10,7 @@ const getAllGoals = async (req, res) => {
   
         if (name) {
             whereClause.goal_title = {
+                // to perform a case-insensitive search for a substring match
                 [Op.like]: `%${name}%` 
             };
         }
@@ -20,7 +21,7 @@ const getAllGoals = async (req, res) => {
             include: [
                 { 
                     model: MasterHashtag, 
-                    as: 'hashtag', 
+                    as: 'hashtag', //alias to be referred in the output
                     attributes: ['id', 'name'] 
                 },
                 { 
@@ -46,6 +47,7 @@ const getGoalById = async (req, res) => {
     const { id } = req.params;
 
     try {
+        //find by primark key -> findByPk()
         const goal = await Goal.findByPk(id, {
             include: [
                 {
@@ -85,10 +87,7 @@ const getGoalById = async (req, res) => {
                     include: [
                         {
                             model: PhaseUser,
-                            as: 'phase',  //  name changed according to the name mentioned in the  model
-
-
-
+                            as: 'phase', 
                             include: [
                                 {
                                     model: User,
