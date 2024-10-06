@@ -206,4 +206,10 @@ router.get('/users', mastercontroller.get_users)
 
 router.post('/hashtags', mastercontroller.create_master_hashtags)
 
+router.get('/timeFrames', mastercontroller.get_time_frames)
+router.get('/actionPriorities', mastercontroller.get_priorities)
+router.get('/actionTypes', mastercontroller.get_action_types)
+router.get('/reasons', mastercontroller.get_reasons)
+
+
 module.exports = router
