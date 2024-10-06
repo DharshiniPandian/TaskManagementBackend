@@ -87,6 +87,20 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+
+      Action.hasMany(models.ActionUser, {
+        foreignKey: 'action_id',
+        as: 'actionid',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      Action.hasMany(models.Task, {
+        foreignKey: 'action_id',
+        as: 'taskactionid',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   Action.init({
