@@ -35,6 +35,12 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+      MasterActionTypes.hasMany(models.MasterActionTypes, {
+        foreignKey: 'action_type',
+        as: 'actiontype',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   MasterActionTypes.init({

@@ -29,6 +29,12 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+      MasterPriority.hasMany(models.Action, {
+        foreignKey: 'priority_id',
+        as: 'priority',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   MasterPriority.init({

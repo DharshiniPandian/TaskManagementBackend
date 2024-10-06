@@ -65,6 +65,13 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE', 
       });
+
+      Goal.hasMany(models.Action, {
+        foreignKey: 'goal_id',
+        as: 'goalactions',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE', 
+      });
     }
   }
   Goal.init({

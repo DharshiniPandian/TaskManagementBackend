@@ -35,6 +35,12 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+      MasterReason.hasMany(models.Action, {
+        foreignKey: 'reason_id',
+        as: 'reason',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   MasterReason.init({

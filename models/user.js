@@ -298,6 +298,27 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       });
 
+      User.hasMany(models.Action, {
+        foreignKey: 'created_by',
+        as: 'actioncreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Action, {
+        foreignKey: 'updated_by',
+        as: 'actionupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Action, {
+        foreignKey: 'deleted_by',
+        as: 'actiondeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
       // User.hasMany(models.GoalUser, {
       //   foreignKey: 'user_id',
       //   as: 'goalusers',
