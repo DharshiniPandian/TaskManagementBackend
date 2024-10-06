@@ -576,7 +576,7 @@ router.put('/deletephase/:id', deletecontroller.deleteGoalPhase)
  *       - in: path
  *         name: phase_id
  *         schema:
- *           type: integer
+ *           type: uuid
  *         required: true
  *         description: The ID of the goal phase
  *         example: 1
@@ -624,6 +624,65 @@ router.put('/deletephase/:id', deletecontroller.deleteGoalPhase)
  */
 
 router.put('/deletephaseuser/:phase_id/:user_id', deletecontroller.deleteGoalPhaseUser)
+
+/**
+ * @swagger
+ * /goal/deletegoaluser/{goal_id}/{user_id}:
+ *   put:
+ *     summary: Soft delete a user from a specific goal
+ *     description: Soft deletes a user associated with a specific goal by setting the "deleted_at" field for that user in the goal.
+ *     parameters:
+ *       - in: path
+ *         name: goal_id
+ *         schema:
+ *           type: uuid
+ *         required: true
+ *         description: The ID of the goal
+ *         example: 1
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The ID of the user to be soft deleted from the goal
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: User successfully soft deleted from the goal
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with ID 2 was successfully soft deleted from goal 1."
+ *       404:
+ *         description: User or goal not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with ID 2 in goal 1 not found."
+ *       500:
+ *         description: Internal Server Error - An error occurred while attempting to delete the goal user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An error occurred while attempting to delete the goal user."
+ *                 error:
+ *                   type: string
+ *                   example: "Database error message here"
+ */
+
+router.put('/deletegoaluser/:goal_id/:user_id', deletecontroller.deleteGoalUser)
 
 
 module.exports = router
