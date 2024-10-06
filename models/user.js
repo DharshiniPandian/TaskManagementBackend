@@ -151,6 +151,153 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       });
 
+      User.hasMany(models.MasterActionTypes, {
+        foreignKey: 'created_by',
+        as: 'actiontypecreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterActionTypes, {
+        foreignKey: 'updated_by',
+        as: 'actiontypeupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterActionTypes, {
+        foreignKey: 'deleted_by',
+        as: 'actiontypedeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterActionStatus, {
+        foreignKey: 'created_by',
+        as: 'actionstatuscreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterActionStatus, {
+        foreignKey: 'updated_by',
+        as: 'actionstatusupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterActionStatus, {
+        foreignKey: 'deleted_by',
+        as: 'actionstatusdeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterOverallActionStatus, {
+        foreignKey: 'created_by',
+        as: 'overallactionstatuscreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterOverallActionStatus, {
+        foreignKey: 'updated_by',
+        as: 'overallactionstatusupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterOverallActionStatus, {
+        foreignKey: 'deleted_by',
+        as: 'overallactionstatusdeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterPriority, {
+        foreignKey: 'created_by',
+        as: 'prioritycreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterPriority, {
+        foreignKey: 'updated_by',
+        as: 'priorityupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterPriority, {
+        foreignKey: 'deleted_by',
+        as: 'prioritydeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReasonType, {
+        foreignKey: 'created_by',
+        as: 'reasontypecreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReasonType, {
+        foreignKey: 'updated_by',
+        as: 'reasontypeupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReasonType, {
+        foreignKey: 'deleted_by',
+        as: 'reasontypedeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReason, {
+        foreignKey: 'created_by',
+        as: 'reasoncreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReason, {
+        foreignKey: 'updated_by',
+        as: 'reasonupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterReason, {
+        foreignKey: 'deleted_by',
+        as: 'reasondeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterTimeFrame, {
+        foreignKey: 'created_by',
+        as: 'timeframecreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterTimeFrame, {
+        foreignKey: 'updated_by',
+        as: 'timeframeupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.MasterTimeFrame, {
+        foreignKey: 'deleted_by',
+        as: 'timeframedeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
       // User.hasMany(models.GoalUser, {
       //   foreignKey: 'user_id',
       //   as: 'goalusers',
