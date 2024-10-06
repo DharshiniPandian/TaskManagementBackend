@@ -66,8 +66,8 @@ const deleteGoalPhase = async (req, res) => {
     try {
       // Soft delete the phase user by setting "deleted_at"
       const result = await PhaseUser.update(
-        { deleted_at: new Date() }, // Set deleted_at to current date
-        { where: { phase_id, user_id } } // Condition to find the phase user by phase_id and user_id
+        { deleted_at: new Date() }, 
+        { where: { phase_id, user_id } } 
       );
   
       // Check if the phase user was found and updated

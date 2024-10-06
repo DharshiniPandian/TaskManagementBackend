@@ -10,7 +10,7 @@ const get_master_domains = async (req, res) => {
     }
     catch (error) {
         console.error("Error fetching domains from master table: ", error)
-        res.status(200).json({ message : "Internal server Error", error: error.message });
+        res.status(500).json({ message : "Internal server Error", error: error.message });
     }
 }
 
@@ -24,7 +24,7 @@ const get_master_hashtags = async (req, res) => {
     }
     catch (error) {
         console.error("Error fetching hashtags from master table: ", error)
-        res.status(200).json({ message : "Internal server Error", error: error.message });
+        res.status(500).json({ message : "Internal server Error", error: error.message });
     }
 }
 
@@ -38,7 +38,7 @@ const get_users = async (req, res) => {
     }
     catch (error) {
         console.error("Error fetching hashtags from master table: ", error)
-        res.status(200).json({ message : "Internal server Error", error: error.message });
+        res.status(500).json({ message : "Internal server Error", error: error.message });
     }
 }
 
