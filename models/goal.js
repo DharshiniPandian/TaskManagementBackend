@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE', 
       });
 
-      Goal.belongsTo(models.MasterHashTag, {
+      Goal.belongsTo(models.MasterHashtag, {
         foreignKey: 'hashtag_id',
         as: 'hashtag',
         onUpdate: 'CASCADE',
@@ -41,13 +41,13 @@ module.exports = (sequelize, DataTypes) => {
 
       Goal.belongsTo(models.User, {
         foreignKey: 'updated_by',
-        as: 'updatedby',
+        as: 'goalupdatedby',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
       Goal.belongsTo(models.User, {
         foreignKey: 'deleted_by',
-        as: 'deletedby',
+        as: 'goaldeletedby',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       }); 

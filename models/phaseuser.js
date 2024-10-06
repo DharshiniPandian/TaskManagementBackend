@@ -11,13 +11,6 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      PhaseUser.belongsTo(models.Goal, {
-        foreignKey: 'phase_id',
-        as: 'phase',
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE', 
-      });
-
       PhaseUser.belongsTo(models.User, {
         foreignKey: 'user_id',
         as: 'user',
@@ -40,6 +33,13 @@ module.exports = (sequelize, DataTypes) => {
       PhaseUser.belongsTo(models.User, {
         foreignKey: 'deleted_by',
         as: 'deletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      PhaseUser.belongsTo(models.GoalPhase, {
+        foreignKey: 'phase_id',
+        as: 'phase',
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
