@@ -61,28 +61,146 @@ const getTaskController = require('../controllers/task_controller/getTask')
  *           type: string
  *           description: Title of the task
  *           example: "Task for planning project"
+ *         planned_eta:
+ *           type: integer
+ *           description: Planned ETA for the task
+ *           example: 3 
  *         custom_planned_eta:
- *           type: string
- *           format: date-time
+ *           type: integer
  *           description: Custom planned ETA for the task
- *           example: "2024-10-10T09:00:00Z"
+ *           example: 15
  *         plannedeta:
- *           type: object
+ *           type: integer
  *           description: Associated planned ETA timeframe
- *           properties:
- *             name:
- *               type: string
- *               example: "Weekly"
+ *           example: 20
  *         taskstatus:
- *           type: object
- *           description: Status of the task
- *           properties:
- *             name:
- *               type: string
- *               example: "In Progress"
+ *           type: integer
+ *           description: ID of Status of the task
+ *           example: 3
  */
 
 router.get('/:action_id', getTaskController.get_tasks_by_action)
+
+/**
+ * @swagger
+ * /task/create:
+ *   post:
+ *     summary: Create a new task
+ *     description: Creates a new task with associated details and assigns users to the task.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               action_id:
+ *                 type: integer
+ *                 description: ID of the action associated with the task
+ *                 example: 123
+ *               task_title:
+ *                 type: string
+ *                 description: Title of the task
+ *                 example: "Project Planning"
+ *               planned_eta:
+ *                 type: integer
+ *                 description: ID of Planned estimated time of completion
+ *                 example: 2
+ *               custom_planned_eta:
+ *                 type: integer
+ *                 description: Custom planned estimated time of completion
+ *                 example: 20
+ *               actual_eta:
+ *                 type: integer
+ *                 description: Actual time of completion (if available)
+ *                 example: 10
+ *               reason_id:
+ *                 type: integer
+ *                 description: ID of the reason for any changes or delays
+ *                 example: 2
+ *               task_status:
+ *                 type: string
+ *                 description: Status of the task (e.g., In Progress, Completed)
+ *                 example: 4
+ *               created_by:
+ *                 type: string
+ *                 description: ID of the user who created the task
+ *                 example: 1
+ *               task_users:
+ *                 type: array
+ *                 description: Array of users associated with the task
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     user_id:
+ *                       type: integer
+ *                       description: ID of the user
+ *                       example: 4
+ *                     is_owner:
+ *                       type: boolean
+ *                       description: Whether the user is the task owner
+ *                       example: true
+ *                     is_assignee:
+ *                       type: boolean
+ *                       description: Whether the user is assigned to the task
+ *                       example: false
+ *                     is_active:
+ *                       type: boolean
+ *                       description: Whether the user is currently active in the task
+ *                       example: true
+ *     responses:
+ *       201:
+ *         description: Task created successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Task created successfully"
+ *                 task:
+ *                   $ref: '#/components/schemas/Task'
+ *                 users:
+ *                   type: array
+ *                   description: List of users associated with the task
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       user_id:
+ *                         type: integer
+ *                         example: 456
+ *                       is_owner:
+ *                         type: boolean
+ *                         example: true
+ *                       is_assignee:
+ *                         type: boolean
+ *                         example: false
+ *                       is_active:
+ *                         type: boolean
+ *                         example: true
+ *       400:
+ *         description: Missing required fields (task_title, action_id, or created_by)
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Missing required fields"
+ *       500:
+ *         description: Internal server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
+
 router.post('/create', createTaskController.create_task)
 
 /**
@@ -107,26 +225,25 @@ router.post('/create', createTaskController.create_task)
  *             properties:
  *               planned_eta:
  *                 type: string
- *                 description: The planned ETA for the task
- *                 example: "2024-10-10T09:00:00Z"
+ *                 description: ID of The planned ETA for the task
+ *                 example: 3
  *               custom_planned_eta:
- *                 type: string
- *                 format: date-time
+ *                 type: integer
  *                 description: Custom planned ETA for the task
- *                 example: "2024-10-15T09:00:00Z"
+ *                 example: 20
  *               actual_eta:
- *                 type: string
+ *                 type: integer
  *                 format: date-time
  *                 description: Actual time taken to complete the task
- *                 example: "2024-10-20T09:00:00Z"
+ *                 example: 18
  *               reason_id:
  *                 type: integer
  *                 description: ID of the reason associated with this task
  *                 example: 2
  *               task_status:
  *                 type: string
- *                 description: The status of the task
- *                 example: "Completed"
+ *                 description: ID of The status of the task
+ *                 example: 3
  *     responses:
  *       200:
  *         description: Task updated successfully
@@ -233,66 +350,69 @@ router.put('/update/:id', updateTaskController.update_task)
 
 router.put('/delete/:id', deleteTaskController.deleteTask)
 
-// /**
-//  * @swagger
-//  * /task/delete/user/{task_id}/{user_id}:
-//  *   put:
-//  *     summary: Delete a task by its ID
-//  *     description: Deletes details of a specific task based on its ID.
-//  *     parameters:
-//  *       - in: path
-//  *         name: task_id
-//  *         schema:
-//  *           type: uuid
-//  *         required: true
-//  *         description: ID of the task to delete
-//  *         name: user_id
-//  *         schema:
-//  *           type: uuid
-//  *         required: true
-//  *         description: User ID to delete
-//  *     responses:
-//  *       200:
-//  *         description: Task User deleted successfully
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "task deleted successfully"
-//  *       400:
-//  *         description: Task ID is required or invalid
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "Task ID is required"
-//  *       404:
-//  *         description: Task not found
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "task not found"
-//  *       500:
-//  *         description: Internal Server Error
-//  *         content:
-//  *           application/json:
-//  *             schema:
-//  *               type: object
-//  *               properties:
-//  *                 message:
-//  *                   type: string
-//  *                   example: "Internal server error"
-//  */
+/**
+ * @swagger
+ * /task/delete/user/{task_id}/{user_id}:
+ *   put:
+ *     summary: Soft delete a user from a specific task
+ *     description: Soft deletes a user associated with a specific task by setting the "deleted_at" field for that user in the goal.
+ *     parameters:
+ *       - in: path
+ *         name: task_id
+ *         schema:
+ *           type: uuid
+ *         required: true
+ *         description: ID of the task to delete
+ *         example: 1
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: uuid
+ *         required: true
+ *         description: User ID to delete
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Task User deleted successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "task user deleted successfully"
+ *       400:
+ *         description: Task ID is required or invalid
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Task ID is required"
+ *       404:
+ *         description: Task not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "task not found"
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Internal server error"
+ */
 
 router.put('/delete/user/:task_id/:user_id', deleteTaskController.deleteTaskUser)
 
