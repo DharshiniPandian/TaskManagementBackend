@@ -1,4 +1,4 @@
-const { Goal, User, MasterDomain, MasterHashtag, MasterGoalStatus, GoalUser, GoalPhase, PhaseUser, Action } = require('../../../models');
+const { MasterOverallActionStatus, Goal, User, MasterDomain, MasterHashtag, MasterGoalStatus, GoalUser, GoalPhase, PhaseUser, Action } = require('../../../models');
 const { Op } = require('sequelize');
 
 const getAllGoals = async (req, res) => {
@@ -79,24 +79,13 @@ const getGoalById = async (req, res) => {
                             as: 'user',
                             attributes: ['id', 'name', 'path'],
                         }
-                    ]
+                    ],
+                    attributes: ['user_id'],
                 },
                 {
                     model: GoalPhase,
                     as: 'goalphases',
-                    include: [
-                        {
-                            model: PhaseUser,
-                            as: 'phase', 
-                            include: [
-                                {
-                                    model: User,
-                                    as: 'user',
-                                    attributes: ['id', 'name', 'path'],
-                                }
-                            ]
-                        }
-                    ]
+                    attributes: ['id', 'phase_title', 'start_at', 'end_at'],
                 }
             ]
         });
@@ -105,13 +94,21 @@ const getGoalById = async (req, res) => {
             return res.status(404).json({ message: 'Goal not found' });
         }
 
-        const actionCountForGoal = await Action.count({
-            where: { goal_id: id }
-        });
+        const actionsUnderGoal = await Action.findAll({
+            where: { goal_id : id },
+            include: [
+                {
+                    model: MasterOverallActionStatus,
+                    as: 'actualactionstatus',
+                    attributes: [ 'name'], 
+                },
+            ],
+            attributes: ['id', 'action_title', 'start_at', 'end_at', 'status'],
+        })
 
         return res.json({
             goal,
-            actionCountForGoal,
+            actionsUnderGoal,
         });
 
     } catch (error) {
