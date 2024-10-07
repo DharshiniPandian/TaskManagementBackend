@@ -2,8 +2,6 @@ const express =  require('express')
 const router = express.Router()
 const mastercontroller = require('../controllers/master_controller')
 
-
-
 /**
  * @swagger
  *  components:

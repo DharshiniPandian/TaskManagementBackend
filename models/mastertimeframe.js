@@ -29,6 +29,20 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+
+      MasterTimeFrame.hasMany(models.Action, {
+        foreignKey: 'planned_eta',
+        as: 'plannedeta',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      MasterTimeFrame.hasMany(models.Task, {
+        foreignKey: 'planned_eta',
+        as: 'taskplannedeta',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
     }
   }
   MasterTimeFrame.init({
