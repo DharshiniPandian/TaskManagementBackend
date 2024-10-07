@@ -1,4 +1,4 @@
-const { Goal, User, MasterDomain, MasterHashtag, MasterGoalStatus, GoalUser, GoalPhase, PhaseUser } = require('../../../models');
+const { Goal, User, MasterDomain, MasterHashtag, MasterGoalStatus, GoalUser, GoalPhase, PhaseUser, Action } = require('../../../models');
 const { Op } = require('sequelize');
 
 const getAllGoals = async (req, res) => {
@@ -105,7 +105,15 @@ const getGoalById = async (req, res) => {
             return res.status(404).json({ message: 'Goal not found' });
         }
 
-        res.json(goal);
+        const actionCountForGoal = await Action.count({
+            where: { goal_id: id }
+        });
+
+        return res.json({
+            goal,
+            actionCountForGoal,
+        });
+
     } catch (error) {
         console.error('Error fetching goal:', error);
         res.status(500).json({ message: 'Internal server error' });

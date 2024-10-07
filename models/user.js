@@ -298,6 +298,69 @@ module.exports = (sequelize, DataTypes) => {
         onDelete: 'CASCADE',
       });
 
+      User.hasMany(models.Action, {
+        foreignKey: 'created_by',
+        as: 'actioncreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Action, {
+        foreignKey: 'updated_by',
+        as: 'actionupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Action, {
+        foreignKey: 'deleted_by',
+        as: 'actiondeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Task, {
+        foreignKey: 'created_by',
+        as: 'taskcreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Task, {
+        foreignKey: 'updated_by',
+        as: 'taskupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.Task, {
+        foreignKey: 'deleted_by',
+        as: 'taskdeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.TaskUser, {
+        foreignKey: 'created_by',
+        as: 'taskusercreatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.TaskUser, {
+        foreignKey: 'updated_by',
+        as: 'taskuserupdatedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
+      User.hasMany(models.TaskUser, {
+        foreignKey: 'deleted_by',
+        as: 'taskuserdeletedby',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
+
       // User.hasMany(models.GoalUser, {
       //   foreignKey: 'user_id',
       //   as: 'goalusers',
