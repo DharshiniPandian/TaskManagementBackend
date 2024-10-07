@@ -20,9 +20,15 @@ const update_task = async (req, res) => {
     if (!task) {
       return res.status(404).json({ message: 'task not found' });
     }
-
-    if (planned_eta) task.planned_eta = planned_eta;
-    if (custom_planned_eta) task.custom_planned_eta = custom_planned_eta;
+    
+    if (planned_eta) {
+      task.planned_eta = planned_eta;
+      task.custom_planned_eta = null;
+    }
+    if (custom_planned_eta) {
+      task.custom_planned_eta = custom_planned_eta;
+      task.planned_eta = null;
+    }
     if (actual_eta) task.actual_eta = actual_eta;
     if (reason_id) task.reason_id = reason_id;
     if (task_status) task.task_status = task_status;

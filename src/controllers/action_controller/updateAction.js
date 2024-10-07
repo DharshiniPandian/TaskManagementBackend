@@ -27,8 +27,14 @@ const update_action = async (req, res) => {
 
     if (start_at) action.start_at = start_at;
     if (end_at) action.end_at = end_at;
-    if (planned_eta) action.planned_eta = planned_eta;
-    if (custom_planned_eta) action.custom_planned_eta = custom_planned_eta;
+    if (planned_eta) {
+      action.planned_eta = planned_eta;
+      action.custom_planned_eta = null;
+    }
+    if (custom_planned_eta) {
+      action.custom_planned_eta = custom_planned_eta;
+      action.planned_eta = null;
+    }
     if (actual_eta) action.actual_eta = actual_eta;
     if (reason_id) action.reason_id = reason_id;
     if (priority_id) action.priority_id = priority_id;
