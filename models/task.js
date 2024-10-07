@@ -75,16 +75,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
     },
-    Task_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-        references: {
-          model: 'Tasks', 
-          key: 'id'
-        },
-        onUpdate: 'CASCADE',
-        onDelete: 'CASCADE'
-    },
     task_title: {
       type: DataTypes.STRING,
       allowNull: false,

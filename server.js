@@ -4,6 +4,8 @@ const sequelize = require('./config/db')
 const cors = require('cors')
 const masterRoutes = require('./src/routes/masterRoutes')
 const goalRoutes = require('./src/routes/goalRoutes')
+const actionRoutes = require('./src/routes/actionRoutes')
+const taskRoutes = require('./src/routes/taskRoutes')
 const swaggerJSDoc = require('swagger-jsdoc')
 const swaggerUi = require('swagger-ui-express')
 
@@ -44,6 +46,8 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec))
 
 app.use('/master', masterRoutes)
 app.use('/goal', goalRoutes)
+app.use('/action', actionRoutes)
+app.use('/task', taskRoutes)
 
 app.get('/', (req, res) => {
     res.send('request received')
