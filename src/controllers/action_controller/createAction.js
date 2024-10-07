@@ -52,7 +52,6 @@ const create_action = async (req, res) => {
         is_active: true,
         created_by
       }));
-
       await ActionUser.bulkCreate(actionUsers);
     }
 
