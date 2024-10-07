@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       });
+
+      TaskUser.belongsTo(models.User, {
+        foreignKey: 'user_id',
+        as: 'user',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+      });
       TaskUser.belongsTo(models.User, {
         foreignKey: 'updated_by',
         as: 'updatedby',

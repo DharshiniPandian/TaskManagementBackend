@@ -1,4 +1,4 @@
-const { MasterActionStatus, Action, MasterActionTypes, MasterPriority, MasterTimeFrame } = require('../../../models');
+const { TaskUser, User, Task, MasterActionStatus, Action, MasterActionTypes, MasterPriority, MasterTimeFrame } = require('../../../models');
 
 const get_actions_by_goal_or_phase = async (req, res) => {
     try {
@@ -33,6 +33,25 @@ const get_actions_by_goal_or_phase = async (req, res) => {
                     model: MasterTimeFrame,
                     as: 'plannedeta',
                     attributes: ['name'], 
+                },
+                {
+                    model: Task,
+                    as: 'taskactionid',
+                    include: [
+                        {
+                            model: TaskUser,
+                            as: 'taskid',
+                            include: [
+                                {
+                                    model: User,
+                                    as: 'user',
+                                    attributes: ['id', 'name', 'path'],
+                                }
+                            ],
+                            attributes: ['user_id'],
+                        }
+                    ],
+                   
                 },
             ],
             attributes: ['id', 'action_title', 'start_at', 'end_at'],

@@ -38,12 +38,12 @@ const deleteActionUser = async (req, res) => {
             attributes: ['id']
         });
 
-        // If there are no tasks under this action, return a message
-        if (tasks.length === 0) {
-            return res.status(400).json({
-                message: `No tasks found for action with ID ${action_id}.`
-            });
-        }
+        // // If there are no tasks under this action, return a message
+        // if (tasks.length === 0) {
+        //     return res.status(400).json({
+        //         message: `No tasks found for action with ID ${action_id}.`
+        //     });
+        // }
 
         // Extract all task ids 
         const taskIds = tasks.map(task => task.id);
@@ -65,7 +65,7 @@ const deleteActionUser = async (req, res) => {
         // Proceed with soft deleting the user from the action if no associations are found
         const result = await ActionUser.update(
             { deleted_at: new Date() },
-            { where: { user_id, action_id } }  // Use action_id instead of goal_id
+            { where: { user_id, action_id } }  
         );
 
         if (result[0] === 0) {

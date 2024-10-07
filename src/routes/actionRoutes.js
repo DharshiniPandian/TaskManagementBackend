@@ -7,7 +7,7 @@ const deleteActionController = require('../controllers/action_controller/deleteA
 
 /**
  * @swagger
- * /action:
+ * /action/:
  *  get:
  *      summary: Retrieve actions filtered by Goal ID or Phase ID
  *      description: Get all actions that match the provided Goal ID or Phase ID from the database, along with details such as action type, priority, status, and planned ETA.
@@ -79,17 +79,21 @@ const deleteActionController = require('../controllers/action_controller/deleteA
  *                                  actionstatus:
  *                                      type: object
  *                                      properties:
+ *                                          id:
+ *                                              type: integer
+ *                                              description: The ID of the priority type
+ *                                              example: 2
  *                                          name:
  *                                              type: string
- *                                              description: The status of the action
- *                                              example: "In Progress"
+ *                                              description: The name of the priority
+ *                                              example: "Open"
  *                                  plannedeta:
  *                                      type: object
  *                                      properties:
  *                                          name:
- *                                              type: string
+ *                                              type: integer
  *                                              description: The estimated time frame for the action
- *                                              example: "Q3 2023"
+ *                                              example: 20
  *          400:
  *              description: Bad request - Goal ID or Phase ID is required
  *              content:
@@ -167,13 +171,13 @@ router.get('/', getActionController.get_actions_by_goal_or_phase)
  *                              description: Estimated time of completion in weeks
  *                              example: 4
  *                          custom_planned_eta:
- *                              type: string
+ *                              type: integer
  *                              description: Custom estimated time of completion
- *                              example: "Q1 2024"
+ *                              example: 15
  *                          actual_eta:
- *                              type: string
+ *                              type: integer
  *                              description: Actual estimated time of completion
- *                              example: "Q2 2024"
+ *                              example: 20
  *                          reason_id:
  *                              type: integer
  *                              description: ID of the reason associated with the action
@@ -321,13 +325,13 @@ router.post('/create', createActionController.create_action)
  *                              description: Estimated time of completion in weeks
  *                              example: 4
  *                          custom_planned_eta:
- *                              type: string
+ *                              type: integer
  *                              description: Custom estimated time of completion (overrides planned_eta if provided)
- *                              example: "Q1 2024"
+ *                              example: 15
  *                          actual_eta:
- *                              type: string
+ *                              type: integer
  *                              description: Actual estimated time of completion
- *                              example: "Q2 2024"
+ *                              example: 20
  *                          reason_id:
  *                              type: integer
  *                              description: ID of the reason associated with the action
@@ -449,7 +453,115 @@ router.post('/create', createActionController.create_action)
 
 router.put('/update/:id', updateActionController.update_action)
 
+/**
+ * @swagger
+ * /action/delete/{id}:
+ *   put:
+ *     summary: Soft delete a action phase
+ *     description: Soft deletes a action by setting its "deleted_at" field to the current date and time. The action remains in the database but is marked as deleted.
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: uuid
+ *         required: true
+ *         description: The ID of the action to be soft deleted
+ *         example: 1
+ *     responses:
+ *       200:
+ *         description: Action successfully soft deleted
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Action with ID 1 was successfully soft deleted."
+ *       400:
+ *         description: Action not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Action with ID 1 not found."
+ *       500:
+ *         description: Internal Server Error - An error occurred while attempting to delete the action
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An error occurred while attempting to delete the action."
+ *                 error:
+ *                   type: string
+ *                   example: "Database error message here"
+ */
+
 router.put('/delete/:id', deleteActionController.deleteAction)
+
+/**
+ * @swagger
+ * /action/delete/user/{action_id}/{user_id}:
+ *   put:
+ *     summary: Soft delete a user from a specific action
+ *     description: Soft deletes a user associated with a specific action by setting the "deleted_at" field for that user in the action.
+ *     parameters:
+ *       - in: path
+ *         name: action_id
+ *         schema:
+ *           type: uuid
+ *         required: true
+ *         description: The ID of the action
+ *         example: 1
+ *       - in: path
+ *         name: user_id
+ *         schema:
+ *           type: integer
+ *         required: true
+ *         description: The ID of the user to be soft deleted from the action
+ *         example: 2
+ *     responses:
+ *       200:
+ *         description: User successfully soft deleted from the action
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with given ID was successfully soft deleted from phase 1."
+ *       400:
+ *         description: User or action not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "User with given ID in action is not found."
+ *       500:
+ *         description: Internal Server Error - An error occurred while attempting to delete the action
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "An error occurred while attempting to delete the action."
+ *                 error:
+ *                   type: string
+ *                   example: "Database error message here"
+ */
+
 router.put('/delete/user/:action_id/:user_id', deleteActionController.deleteActionUser)
 
 module.exports = router
