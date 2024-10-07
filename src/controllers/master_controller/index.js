@@ -1,4 +1,4 @@
-const {User, MasterDomain, MasterHashtag,MasterTimeFrame,MasterPriority,MasterActionTypes,MasterReason} = require('../../../models')
+const {User, MasterDomain, MasterHashtag,MasterTimeFrame,MasterPriority,MasterActionTypes,MasterReason,MasterActionStatus,MasterOverallActionStatus} = require('../../../models')
 
 const get_master_domains = async (req, res) => {
     try{
@@ -85,19 +85,60 @@ const get_action_types = async (req, res) => {
 }
 
 const get_reasons = async (req, res) => {
-    try{
-        const {reason_type} = req.body
+    try {
+
+        const { reason_type } = req.query;
+        if (!reason_type) {
+            return res.status(400).json({ message: "reason_type is required" });
+        }
+
         const masterReasons = await MasterReason.findAll({
+            attributes: ['id', 'name'],
+            where: {
+                is_active: true,
+                reason_type_id: reason_type,
+            },
+        });
+
+        res.status(200).json(masterReasons);
+    } catch (error) {
+        console.error("Error fetching reasons from master table: ", error);
+        res.status(500).json({ message: "Internal Server Error", error: error.message });
+    }
+};
+
+
+const get_action_status = async (req, res) => {
+    try{
+        const {feature_type} = req.query
+        if(!feature_type){
+            return res.status(400).json({ message: "feature_type is required" });
+        }
+        const masterActionStatus = await MasterActionStatus.findAll({
             attributes: ['id', 'name'], 
             where: { 
                 is_active: true,
-                reason_type_id:reason_type
+                type_id:feature_type
             }
         })
-        res.status(200).json(masterReasons);
+        res.status(200).json(masterActionStatus);
     }
     catch (error) {
-        console.error("Error fetching action types from master table: ", error)
+        console.error("Error fetching action status from master table: ", error)
+        res.status(500).json({ message : "Internal server Error", error: error.message });
+    }
+}
+
+const get_overal_action_status = async (req, res) => {
+    try{
+        const masterOveralActionStatus = await MasterOverallActionStatus.findAll({
+            attributes: ['id', 'name'], 
+            where: { is_active: true }
+        })
+        res.status(200).json(masterOveralActionStatus);
+    }
+    catch (error) {
+        console.error("Error fetching overal action status from master table: ", error)
         res.status(500).json({ message : "Internal server Error", error: error.message });
     }
 }
@@ -134,5 +175,7 @@ module.exports = {
     get_time_frames,
     get_priorities,
     get_action_types,
-    get_reasons
+    get_reasons,
+    get_action_status,
+    get_overal_action_status
 }
