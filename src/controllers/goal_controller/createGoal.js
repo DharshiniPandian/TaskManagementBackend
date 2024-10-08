@@ -4,7 +4,7 @@ const create_goal = async (req, res) => {
   const t = await sequelize.transaction();
   try {
     const { goal, goal_users, goal_phases } = req.body;
-
+    console.log(goal);
     // Create the goal
     const newGoal = await Goal.create(
       {
@@ -16,7 +16,7 @@ const create_goal = async (req, res) => {
         end_at: goal.end_at,
         status_id: goal.status_id,
         goal_created_by: goal.goal_created_by,
-        created_by: goal.created_by,
+        created_by: goal.goal_created_by,
         is_active: goal.is_active,
       },
       { transaction: t }
@@ -26,10 +26,10 @@ const create_goal = async (req, res) => {
     if (goal_users && goal_users.users && goal_users.users.length > 0) {
       const goalUsers = goal_users.users.map((goal_user) => ({
         goal_id: newGoal.id,
-        user_id: goal_user.user_id,
+        user_id: goal_user.user_id, 
         is_owner: goal_user.is_owner,
         is_assignee: goal_user.is_assignee,
-        created_by: goal.created_by,
+        created_by: goal.goal_created_by,
         is_active: goal_user.is_active,
       }));
       await GoalUser.bulkCreate(goalUsers, { transaction: t });
@@ -43,7 +43,7 @@ const create_goal = async (req, res) => {
         start_at: phase.start_at,
         end_at: phase.end_at,
         is_active: phase.is_active,
-        created_by: goal.created_by,
+        created_by: goal.goal_created_by,
       }));
 
       const newPhases = await GoalPhase.bulkCreate(phases, { transaction: t, returning: true });
@@ -56,7 +56,7 @@ const create_goal = async (req, res) => {
             phase_id: phase.id,
             user_id: phase_user.user_id,
             is_active: phase_user.is_active,
-            created_by: goal.created_by,
+            created_by: goal.goal_created_by,
             is_owner: phase_user.is_owner,
             is_assignee: phase_user.is_assignee,
           }));
